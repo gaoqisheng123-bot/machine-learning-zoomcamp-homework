@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY pyproject.toml .
 
-RUN pip install uv && uv pip install --system -r <(uv pip compile pyproject.toml -q -o -)
+RUN pip install uv \
+    && uv pip compile pyproject.toml -q -o requirements.txt \
+    && uv pip install --system -r requirements.txt
 
 COPY app.py .
 
