@@ -1,156 +1,138 @@
 # Heart Disease Prediction Service
 
-## Project Overview
 
-This project builds a machine learning service to predict the probability of a patient having heart disease based on a set of health-related attributes. The goal is to provide a reliable, API-based tool that can be used for early risk assessment.
+## 1. Project Overview
 
-The project follows the following workflow:
-1.  **Data Analysis:** In-depth exploratory data analysis (EDA) to understand the dataset.
-2.  **Model Experimentation:** Training and comparing multiple models and parameter tuning (Logistic Regression, Random Forest, XGBoost) to find the best performer.
-3.  **Production Training:** A standalone script to train the final, chosen model on the full dataset.
-4.  **API Service:** A Flask-based web service that exposes the trained model via an API endpoint.
-5.  **Containerization:** A `Dockerfile` to package the prediction service for reproducible and portable deployment.
+This repository contains a complete, production-ready machine learning project designed to predict the probability of heart disease. It demonstrates a full MLOps cycle, starting from raw data exploration and culminating in a containerized API, ready for cloud deployment.
 
----
+The core goal is to build a reliable and reproducible service that takes patient health data as input and returns a prediction, making it a valuable tool for early-stage risk assessment.
 
-## The Dataset
-
-*   **Source:** [Kaggle Heart Disease Dataset](https://www.kaggle.com/datasets/oktayrdeki/heart-disease/data)
-*   **Description:** The dataset contains 10,000 patient records with 21 columns. These columns include demographic information (`Age`, `Gender`), physiological measurements (`Blood Pressure`, `Cholesterol Level`), and lifestyle factors (`Smoking`, `Exercise Habits`).
-*   **Objective:** The goal is to predict the `Heart Disease Status` column, which indicates whether a patient has heart disease ('Yes' or 'No').
+### Key Features & Technologies
+*   **Workflow:** Data Analysis → Model Training → API Service → Containerization → Cloud Deployment.
+*   **Model:** The final model is selected after comparing Logistic Regression, Random Forest, and XGBoost.
+*   **API Framework:** Flask is used to create a lightweight and robust prediction endpoint.
+*   **Dependency Management:** `pyproject.toml` and `uv` for modern, fast, and reproducible package installation.
+*   **Containerization:** `Docker` is used to package the application, ensuring it runs identically in any environment.
 
 ---
 
-## Project Structure
+## 2. The Flow of the Project
 
-Here is a breakdown of the key files in this project:
+This project is structured to follow a professional machine learning workflow, ensuring a clear separation between experimentation and production-ready code.
 
+1.  **Phase 1: Experimentation (`notebook.ipynb`)**
+    This is the "research lab." We use a Jupyter Notebook for its interactive nature to perform deep Exploratory Data Analysis (EDA), visualize data patterns, handle missing values, and experiment with different models to find the top performer and its best settings.
+
+2.  **Phase 2: Production Training (`train.py`)**
+    This is the "factory." We take the insights from the notebook and create an automated, repeatable script. This script loads the raw data, applies the exact same cleaning steps, and trains the winning model on the full dataset. Its only job is to produce the final, serialized model artifact (`heart_disease_model.pkl`).
+
+3.  **Phase 3: Serving (`predict.py` & `Dockerfile`)**
+    This is the "storefront." The `predict.py` script loads the trained model and exposes it via a Flask web server. The `Dockerfile` then packages this entire service—including the Python runtime, all dependencies, and the application code—into a portable, self-contained unit called a Docker image.
+
+---
+
+## 3. The Function of Each Files
+
+Understanding the role of each file is key to understanding the project.
+
+| File | Purpose |
+| :--- | :--- |
+| **`notebook.ipynb`** | **The Research Notebook.** All initial data cleaning, visualization, feature engineering, and model comparison happens here. It's our interactive scratchpad for finding the best approach. |
+| **`train.py`** | **The Model Trainer.** An automated script that takes the best model and parameters from the notebook, trains it on the full dataset, and saves the final `heart_disease_model.pkl` file. |
+| **`predict.py`** | **The Prediction API.** A Flask web application that loads the trained model and exposes a `/predict` endpoint. It listens for `POST` requests containing patient data and returns a JSON prediction. |
+| **`heart_disease.csv`** | **The Raw Data.** The original, untouched dataset used for training and analysis. |
+| **`heart_disease_model.pkl`**| **The Trained Model Artifact.** A binary file containing the trained `DictVectorizer` and the final prediction model. This file is generated by `train.py`. |
+| **`pyproject.toml`** | **The Dependency List.** The modern standard for defining the Python packages this project needs (e.g., `pandas`, `xgboost`, `flask`). |
+| **`uv.lock`** | **The Environment Lock File.** A highly detailed file that lists the *exact* versions of all dependencies. Using this ensures that the project's environment is 100% reproducible every time. |
+| **`Dockerfile`** | **The Container Blueprint.** A set of instructions for building a Docker image. It specifies the base OS, installs dependencies, copies the application files, and defines the command to run the service. |
+| **`deploy.sh`** | **The Cloud Deployment Script.** An automation script to build the Docker image in the cloud and deploy it as a live web service on Google Cloud Run. |
+| **`README.md`** | **The Project Manual.** This file, which provides a complete guide to understanding, running, and deploying the project. |
+
+---
+
+## 4. Reproducibility (in JupyterLab)
+
+This guide will walk you through running the entire project from start to finish within a JupyterLab environment. All commands should be run in notebook cells.
+
+### Step 1: Clone the Repository
+
+First, get the project code onto your machine. Open a terminal and run:
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 ```
-├── notebook.ipynb           # Jupyter Notebook for EDA and model experimentation.
-├── train.py                 # Python script to train the final model.
-├── predict.py               # Python script that serves the model via a Flask API.
-├── heart_disease.csv        # The raw dataset used for training.
-├── heart_disease_model.pkl  # The final trained model artifact (generated by train.py).
-|
-├── pyproject.toml           # Defines the project's direct Python dependencies.
-├── uv.lock                  # A lock file for reproducible installation of dependencies.
-|
-├── Dockerfile               # Blueprint for building a portable Docker container.
-└── README.md                # This instruction file.
-```
 
----
+### Step 2: Set Up The Environment (First-Time Only)
 
-## The End-to-End Workflow
+This step creates a self-contained virtual environment and installs the exact dependencies needed for the project. **This only needs to be done once.**
 
-This project is structured into distinct phases, moving from analysis to a live service.
-
-1.  **Phase 1: Analysis in the Notebook (`notebook.ipynb`)**
-    This is the "research" phase. We use the Jupyter notebook to freely explore the data, handle missing values, visualize distributions, and compare the performance of different machine learning models. The outcome of this phase is **knowledge**: we identify the best-performing model and its optimal hyperparameters.
-
-2.  **Phase 2: Training the Production Model (`train.py`)**
-    This is the "manufacturing" phase. We take the knowledge gained from the notebook and create a clean, automated script. This script loads the raw data, applies the exact same cleaning steps, and trains the winning model on the full training dataset. The outcome is a production-ready artifact: `heart_disease_model.pkl`.
-
-3.  **Phase 3: Serving and Testing (`predict.py`)**
-    This is the "deployment" phase. We create a script that loads the saved `heart_disease_model.pkl` file and wraps it in a Flask web server. This exposes our model to the outside world. We can then send it new patient data and get live predictions back.
-
----
-
-## How to Run This Project (Using Jupyter Notebook / JupyterLab)
-
-This guide will walk you through running the entire project from start to finish within a Jupyter environment. The commands are run inside notebook cells.
-
-### Step 1: Environment Setup (First-Time Only)
-
-Before you can run the code, you need to set up a dedicated environment with all the necessary libraries. This ensures that the project runs correctly without interfering with your other Python projects.
-
-In a new notebook cell, run the following commands. This only needs to be done **once**.
-
+In a new Jupyter Notebook cell, run the following:
 ```python
 # Create a virtual environment folder named 'venv'
 !python -m venv venv
 
-# Install the 'uv' package manager, which is very fast
+# Install 'uv', our fast package installer
 !venv/bin/python -m pip install uv
 
-# Use 'uv' to install the exact package versions from the lock file
-# This guarantees a reproducible environment.
+# Use 'uv' to install the exact package versions from the lock file.
+# This guarantees that the environment is 100% reproducible.
 !venv/bin/python -m uv pip sync uv.lock
 
 print("✅ Environment setup complete! You are ready to proceed.")
 ```
 
-### Step 2: Analysis and Finding the Best Model
+### Step 3: Data Analysis & Finding the Best Model
 
-The first step in the workflow is to understand our data and find the best model.
+1.  From the JupyterLab file browser, open `notebook.ipynb`.
+2.  Run all the cells from top to bottom. This will perform the EDA and model comparison.
+3.  Scroll to the **"Overall Model Comparison"** section at the end. The output will tell you which model performed best. **Note down the winning model's name and its best parameters.** You will need these for the next step.
 
-1.  **Open `notebook.ipynb`**.
-2.  **Run all the cells** from top to bottom.
-3.  Scroll to the **"Overall Model Comparison"** section at the end. The output will tell you which model performed best on the validation data and what its best parameters are. **Write these down**, as you will need them in the next step.
+### Step 4: Training the Final Production Model
 
-    *Example Output:*
-    ```
-    The best model is: 'XGBoost' with a validation AUC of 0.8945
-    ```
+Now, we'll use our findings to train the final model.
 
-### Step 3: Training the Final Model
-
-Now we will use our findings from the notebook to train the final, production-ready model.
-
-1.  **Edit `train.py`:** Go back to the JupyterLab file browser and open the `train.py` script.
-2.  **Update the Parameters:** At the top of the script, update the `MODEL_NAME` and `BEST_PARAMS` variables with the winning model and parameters you noted down from the notebook.
-
-    *Example: If XGBoost won, you would change it to look like this:*
-    ```python
-    MODEL_NAME = 'XGBoost'
-    BEST_PARAMS = {
-        'learning_rate': 0.1,
-        'max_depth': 5,
-        'n_estimators': 150,
-        # ... other XGBoost parameters
-    }
-    ```
-3.  **Run the Training Script:** In a new notebook cell, run the following command. This executes the `train.py` script using the Python from the virtual environment you created in Step 1.
+1.  **⚠️ Critical Step: Edit `train.py`**. Go back to the JupyterLab file browser and open the `train.py` script.
+2.  At the top of the script, update the `MODEL_NAME` and `BEST_PARAMS` variables with the winning model and parameters you noted down from the notebook.
+3.  **Run the Training Script.** In a new notebook cell, run the following command. This executes the `train.py` script using the Python from your `venv`.
 
     ```python
     !venv/bin/python train.py
     ```
-    After it finishes, you will see a new file, `heart_disease_model.pkl`, in your project directory. This is your trained model!
+    After it finishes, you will see a new file, **`heart_disease_model.pkl`**, in your project directory. This is your trained model!
 
-### Step 4: Serving the Model with the API
+### Step 5: Serving the Model with the API
 
-With the model trained, let's start the web service to make it available for predictions.
+With the model trained, let's start the web service.
 
-1.  **Run the Prediction Server:** In a new notebook cell, execute the command below. The `&` at the end runs the server as a **background process**, which is essential in a notebook so you can continue to run other cells.
+1.  **Run the Prediction Server.** In a new notebook cell, execute the command below. The `&` at the end runs the server as a **background process**, which is essential in a notebook so you can continue to run other cells.
 
     ```python
-    # Start the server and save its logs to a file
+    # Start the server and save its logs to a file for debugging
     !venv/bin/python predict.py > server_logs.txt 2>&1 &
 
-    print("🚀 Prediction server started in the background.")
-    print("You can now send requests to it.")
+    print("🚀 Prediction server started in the background on http://localhost:9696")
     ```
 
-### Step 5: Testing the Live Prediction Service
+### Step 6: Testing the Live Prediction Service with `curl`
 
-Your API is now running and waiting for requests. Let's send it some data to get a prediction.
+Your API is now running and waiting for requests. Let's send it some data to get a live prediction.
 
-1.  **Send a `curl` Request:** In a new notebook cell, run the following command. This simulates an external application sending a patient's data to your API.
+1.  **Send a `curl` Request.** In a new notebook cell, run the following command. This simulates an external application sending a patient's data to your API.
 
     ```python
     !curl -X POST "http://localhost:9696/predict" \
       -H "Content-Type: application/json" \
       -d '{
-            "Age": 65, "Gender": "Male", "Blood Pressure": 160, "Cholesterol Level": 250,
+            "Age": 30, "Gender": "Male", "Blood Pressure": 160, "Cholesterol Level": 250,
             "Exercise Habits": "Low", "Smoking": "Yes", "Family Heart Disease": "Yes",
-            "Diabetes": "Yes", "BMI": 32.0, "High Blood Pressure": "Yes",
+            "Diabetes": "No", "BMI": 32.0, "High Blood Pressure": "No",
             "Low HDL Cholesterol": "Yes", "High LDL Cholesterol": "Yes",
-            "Stress Level": "High", "Sleep Hours": 5, "Sugar Consumption": "High",
+            "Stress Level": "Low", "Sleep Hours": 6, "Sugar Consumption": "Low",
             "Triglyceride Level": 200, "Fasting Blood Sugar": 130, "CRP Level": 4.0,
             "Homocysteine Level": 15.0
           }'
     ```
-2.  **See the Result:** The cell will output the prediction from your model in JSON format.
+2.  **See the Result.** The cell will instantly output the prediction from your model in JSON format.
 
     *Example Output:*
     ```json
@@ -158,23 +140,3 @@ Your API is now running and waiting for requests. Let's send it some data to get
       "has_heart_disease": true,
       "heart_disease_probability": 0.881234567
     }
-    ```
-
-Congratulations! You have successfully run the entire machine learning workflow from data analysis to a live prediction.
-
----
-
-## Containerization with Docker
-
-For making this service truly portable and ready for production, a `Dockerfile` is included. This file contains all the instructions to package the prediction service into a lightweight, isolated container.
-
-**Build the Docker Image:**
-```bash
-docker build -t heart-disease-service .
-```
-
-**Run the Docker Container:**
-```bash
-docker run -p 9696:9696 heart-disease-service
-```
-The service will now be running inside the container and can be tested using the same `curl` command as before.

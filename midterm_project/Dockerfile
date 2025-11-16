@@ -1,4 +1,4 @@
-FROM python:3.9-slim as builder
+FROM python:3.11-slim as builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 RUN uv pip sync uv.lock
 
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
