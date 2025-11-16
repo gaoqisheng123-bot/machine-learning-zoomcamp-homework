@@ -1,0 +1,11 @@
+[project]
+name = "heart-disease-predictor"
+version = "0.1.0"
+dependencies = [
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "xgboost",
+    "Flask",
+    "gunicorn",
+]

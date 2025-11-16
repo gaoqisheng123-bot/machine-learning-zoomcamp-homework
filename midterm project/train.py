@@ -23,13 +23,13 @@ df.drop('Alcohol Consumption', axis=1, inplace=True)
 numerical_cols = ['Age', 'Blood Pressure', 'Cholesterol Level', 'BMI', 'Triglyceride Level', 'Fasting Blood Sugar', 'CRP Level', 'Homocysteine Level', 'Sleep Hours']
 for col in numerical_cols:
     if df[col].isnull().any():
-        df[col].fillna(df[col].median(), inplace=True)
+        df[col] = df[col].fillna(df[col].median())
 
 # replace categorical null with mode
 categorical_cols = ['Gender', 'Exercise Habits', 'Smoking', 'Family Heart Disease', 'Diabetes', 'High Blood Pressure', 'Low HDL Cholesterol', 'High LDL Cholesterol', 'Stress Level', 'Sugar Consumption']
 for col in categorical_cols:
     if df[col].isnull().any():
-        df[col].fillna(df[col].mode()[0], inplace=True)
+        df[col] = df[col].fillna(df[col].mode()[0])
 
 
 df.rename(columns={'Heart Disease Status': 'status'}, inplace=True)
@@ -46,7 +46,11 @@ dv = DictVectorizer(sparse=False)
 train_dicts = df_full_train.to_dict(orient='records')
 X_full_train = dv.fit_transform(train_dicts)
 
-model = LogisticRegression(BEST_PARAMS)
+model = LogisticRegression(
+    C = 0.01, 
+    solver = 'liblinear',
+    random_state = 42
+)
 
 model.fit(X_full_train, y_full_train)
 
