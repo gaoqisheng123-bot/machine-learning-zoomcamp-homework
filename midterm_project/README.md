@@ -1,5 +1,4 @@
 # ❤️ Heart Disease Prediction API  
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 **Machine Learning • Flask API • Docker • Google Cloud Run**
 
 # Heart Disease Prediction Service
