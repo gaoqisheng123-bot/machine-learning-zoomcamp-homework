@@ -1,8 +1,6 @@
-# ❤️ Heart Disease Prediction  
+# ❤️ Heart Disease Prediction Service
 **Machine Learning • Flask API • Docker • Google Cloud Run**
 
-
-# Heart Disease Prediction Service
 This repository contains a complete, production-ready machine learning project that predicts the probability of heart disease. 
 
 ---
