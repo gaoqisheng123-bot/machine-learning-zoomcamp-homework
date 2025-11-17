@@ -1,4 +1,4 @@
-# ❤️ Heart Disease Prediction API  
+# ❤️ Heart Disease Prediction  
 **Machine Learning • Flask API • Docker • Google Cloud Run**
 
 
