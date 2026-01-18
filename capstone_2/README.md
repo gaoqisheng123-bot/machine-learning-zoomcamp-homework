@@ -78,15 +78,11 @@ This project ensures 100% reproducibility across environments:
 ---
 
 ## 6. Containerization & Deployment (4/4 Points)
-### Containerization
-The application is fully containerized using a **Multi-Stage Docker Build** to minimize the final image size.
+The application is fully containerized.
 *   **Build command:** `docker build -t traffic-sign-ai .`
 *   **Run command:** `docker run -it -p 9696:9696 traffic-sign-ai`
 
-### Model Deployment
-The model is served as a web service via **Flask**.
-*   **Endpoint:** `/predict` (POST)
-*   **Response:** JSON format including `class_id`, `class_name`, and `confidence`.
+
 
 ### Cloud Deployment
 *   **Public URL:** [INSERT YOUR RENDER URL HERE]
