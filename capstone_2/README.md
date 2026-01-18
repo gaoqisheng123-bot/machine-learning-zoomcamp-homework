@@ -1,4 +1,4 @@
-# Traffic Sign Recognition Project
+# Traffic Sign Recognition: A Deep Learning Approach using CNNs
 
 This project implements a complete end-to-end Machine Learning pipeline to classify traffic signs from the German Traffic Sign Recognition Benchmark (GTSRB).
 
