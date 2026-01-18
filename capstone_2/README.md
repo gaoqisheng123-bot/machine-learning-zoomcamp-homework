@@ -44,15 +44,15 @@ This project trains CNN under different parameter and the best model is chosen:
     *   **Dropout Rate:** Tested 0.2, 0.5, and 0.8 to find the best regularization balance.
     *   **Learning Rate:** Tuned the Adam optimizer using 0.01, 0.001, and 0.0001.
 *   **Inheritance:** Each tuning phase inherited the "Best" parameters from the previous step to continuously evolve the model.
-*   During parameter stage, all models are trained with 5 epochs, the best parameters obtained are then trained with 20 epochs to be used as the final model.
+*   During parameter stage, all models are trained with 5 epochs, the best parameters obtained are then trained with 20 epochs to be used as the final model. The default "Best" parameter are 128 inner layers, dropout rate with 0.5 and learning rate of 0.001.
 
 | Phase | Parameter Tuned | Values Tested | Best Value | Val Accuracy | Rationale & Observation |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **0** | **Baseline** | N/A | No Dropout | 94.06% | Establishing a floor. The model showed high accuracy but signs of slight overfitting. |
-| **1** | **Inner Layer Size** | 64, 128, **256** | 256 | 95.82% | 256 nodes captured complex spatial features of 43 classes better than 64 nodes. |
-| **2** | **Dropout Rate** | 0.2, **0.5**, 0.8 | 0.5 | 96.15% | 0.8 caused underfitting; 0.5 provided the best regularization against overfitting. |
-| **3** | **Learning Rate** | 0.01, **0.001**, 0.0001 | 0.001 | 96.48% | 0.01 was too aggressive (accuracy jumped); 0.001 provided smooth convergence. |
-| **Final**| **Grand Champion**| Combined Best | **Final Model** | **98.25%** | Final architecture: 2 Conv layers + 256 Dense + 0.4 Dropout + 0.001 LR (20 Epochs). |
+| **0** | **Baseline** | N/A | No Dropout | 94.13% | Establishing a floor. The model showes high accuracy even for base model. |
+| **1** | **Inner Layer Size** | 64, 128, **256** | 256 | 89.53% | 256 nodes captures complex spatial features of 43 classes better than other number of nodes. |
+| **2** | **Dropout Rate** | **0.2**, 0.5, 0.8 | 0.5 | 94.44% | 0.8 caused underfitting; 0.2 provided the best regularization against overfitting. |
+| **3** | **Learning Rate** | 0.01, **0.001**, 0.0001 | 0.001 | 94.44% | 0.01 is too aggressive, 0.0001 is too slow 0.001 provided smooth convergence. |
+| **Final**| **Grand Champion**| Combined Best | **Final Model** | **99.03%** | Final architecture: 2 Conv layers + 256 Dense + 0.2 Dropout + 0.001 LR (20 Epochs). |
 
 ---
 
