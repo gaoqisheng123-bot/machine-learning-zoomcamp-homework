@@ -56,7 +56,7 @@ This project trains CNN under different parameter and the best model is chosen:
 
 ---
 
-## 4. Deployment
+## 4. Deployment and Run Locally
 The model is served as a web service via **Flask**.
 *   **Endpoint:** `/predict` (POST)
 *   **Response:** JSON format including `class_id`, `class_name`, and `confidence`.
@@ -65,8 +65,19 @@ Run
 *   **`train.py`**: This script contains the final architecture and logic to train the model and save it as `traffic_sign_model.h5`.
 Run
 *   **`predict.py`**: This script starts the Flask API locally and interact with the model via a web interface.
+
+When predict.py is running, open a new terminal and 
+
 Run
-*   **`predict_own`**: This script run the selected testing picture in the testing dataset.
+*   **`predict_own.py`**: This script run the selected testing picture in the testing dataset, edit the py script to change the tested picture.
+
+or
+
+Open on a browser and search to choose an own picture to test
+```bash
+http://localhost:9696/
+```
+
 ---
 
 ## 5. Containerization
@@ -75,7 +86,9 @@ The application is fully containerized.
    ```bash
    `docker build -t traffic-sign-ai .`
    ```
+   ```bash
 *   **Run command:** `docker run -it -p 9696:9696 traffic-sign-ai`
+   ```
 
 
 
