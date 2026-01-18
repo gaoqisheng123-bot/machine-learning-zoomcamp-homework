@@ -56,7 +56,7 @@ This project trains CNN under different parameter and the best model is chosen:
 
 ---
 
-## 4. Exporting Notebook to Script (1/1 Point)
+## 4. Deployment
 The logic for the final optimized model was exported from the experimentation notebook to a standalone training script:
 *   **`train.py`**: This script contains the final architecture and logic to train the model and save it as `traffic_sign_model.h5`.
 
