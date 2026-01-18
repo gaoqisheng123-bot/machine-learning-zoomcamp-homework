@@ -86,18 +86,21 @@ The application is fully containerized.
    ```bash
    `docker build -t traffic-sign-ai .`
    ```
+*   **Run command:**
    ```bash
-*   **Run command:** `docker run -it -p 9696:9696 traffic-sign-ai`
+   `docker run -it -p 9696:9696 traffic-sign-ai`
+   ```
+*   **Test comman:**
+   ```bash
+   `python predict_test.py`
    ```
 
 
 
 ### Cloud Deployment
-*   **Public URL:** [INSERT YOUR RENDER URL HERE]
-*   **Note:** Render's Free Tier has a 512MB RAM limit. TensorFlow initialization may occasionally exceed this limit.
-*   **Deployment Evidence:** A screenshot of a successful prediction response (JSON) from the deployed container is provided below.
+*   **Public URL:** [(https://traffic-sign-ai-hsf3.onrender.com)]
+*   **Note:** The link might take a couples of minutes to load, after it is done loading, choose a picture of your own to test it.
 
-*(INSERT_YOUR_SCREENSHOT_HERE)*
 
 ---
 
