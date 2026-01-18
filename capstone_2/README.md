@@ -44,6 +44,7 @@ This project trains CNN under different parameter and the best model is chosen:
     *   **Dropout Rate:** Tested 0.2, 0.5, and 0.8 to find the best regularization balance.
     *   **Learning Rate:** Tuned the Adam optimizer using 0.01, 0.001, and 0.0001.
 *   **Inheritance:** Each tuning phase inherited the "Best" parameters from the previous step to continuously evolve the model.
+*   During parameter stage, all models are trained with 5 epochs, the best parameters obtained are then trained with 20 epochs to be used as the final model.
 
 | Phase | Parameter Tuned | Values Tested | Best Value | Val Accuracy | Rationale & Observation |
 | :--- | :--- | :--- | :--- | :--- | :--- |
