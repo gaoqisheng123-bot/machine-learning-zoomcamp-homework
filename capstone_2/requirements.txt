@@ -4,4 +4,4 @@ pandas
 numpy
 pillow
 scikit-learn
-Kagglehub
+kagglehub
