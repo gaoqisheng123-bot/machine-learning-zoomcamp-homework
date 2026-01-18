@@ -6,6 +6,22 @@ __pycache__/
 # C extensions
 *.so
 
+# Kaggle / datasets
+.cache/
+.kaggle/
+data/
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
 # Distribution / packaging
 .Python
 build/

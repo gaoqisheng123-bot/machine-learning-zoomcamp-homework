@@ -14,9 +14,13 @@ EPOCHS = 20
 IMG_SIZE = (32, 32)
 
 def train_final_model():
-    print("Loading and preparing data...")
-    df = pd.read_csv('data/Train.csv')
-    df['Path'] = 'data/' + df['Path']
+    print("Downloading dataset...")
+    dataset_id = "meowmeowmeowmeowmeow/gtsrb-german-traffic-sign"
+    data_path = kagglehub.dataset_download(dataset_id)
+    
+    df = pd.read_csv(os.path.join(data_path, "Train.csv"))
+    
+    df['Path'] = df['Path'].apply(lambda p: os.path.join(data_path, p))
     df['ClassId'] = df['ClassId'].astype(int)
     
     train_set, val_set = train_test_split(df, test_size=0.2, stratify=df['ClassId'], random_state=42)

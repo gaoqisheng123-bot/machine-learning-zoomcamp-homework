@@ -2,6 +2,7 @@
 #    uv pip compile pyproject.toml --python-version 3.11 -o uv.lock
 absl-py==2.3.1
     # via
+    #   keras
     #   tensorboard
     #   tensorflow-cpu
 astunparse==1.6.3
@@ -15,17 +16,11 @@ charset-normalizer==3.4.4
 click==8.3.1
     # via flask
 flask==3.1.2
-    # via traffic-sign-classification (pyproject.toml)
+    # via traffic-sign-ai (pyproject.toml)
 flatbuffers==25.12.19
     # via tensorflow-cpu
 gast==0.7.0
     # via tensorflow-cpu
-google-auth==2.47.0
-    # via
-    #   google-auth-oauthlib
-    #   tensorboard
-google-auth-oauthlib==1.2.4
-    # via tensorboard
 google-pasta==0.2.0
     # via tensorflow-cpu
 grpcio==1.76.0
@@ -33,7 +28,9 @@ grpcio==1.76.0
     #   tensorboard
     #   tensorflow-cpu
 h5py==3.15.1
-    # via tensorflow-cpu
+    # via
+    #   keras
+    #   tensorflow-cpu
 idna==3.11
     # via requests
 itsdangerous==2.2.0
@@ -42,63 +39,80 @@ jinja2==3.1.6
     # via flask
 joblib==1.5.3
     # via scikit-learn
-keras==2.15.0
+kagglehub==0.4.0
+    # via traffic-sign-ai (pyproject.toml)
+kagglesdk==0.1.15
+    # via kagglehub
+keras==3.13.1
     # via tensorflow-cpu
 libclang==18.1.1
     # via tensorflow-cpu
 markdown==3.10
     # via tensorboard
+markdown-it-py==4.0.0
+    # via rich
 markupsafe==3.0.3
     # via
     #   flask
     #   jinja2
     #   werkzeug
-ml-dtypes==0.2.0
-    # via tensorflow-cpu
-numpy==1.26.4
+mdurl==0.1.2
+    # via markdown-it-py
+ml-dtypes==0.5.4
     # via
-    #   traffic-sign-classification (pyproject.toml)
+    #   keras
+    #   tensorflow-cpu
+namex==0.1.0
+    # via keras
+numpy==2.4.1
+    # via
+    #   traffic-sign-ai (pyproject.toml)
     #   h5py
+    #   keras
     #   ml-dtypes
     #   pandas
     #   scikit-learn
     #   scipy
     #   tensorboard
     #   tensorflow-cpu
-oauthlib==3.3.1
-    # via requests-oauthlib
 opt-einsum==3.4.0
     # via tensorflow-cpu
+optree==0.18.0
+    # via keras
 packaging==25.0
-    # via tensorflow-cpu
-pandas==2.3.3
-    # via traffic-sign-classification (pyproject.toml)
-pillow==12.1.0
-    # via traffic-sign-classification (pyproject.toml)
-protobuf==4.25.8
     # via
+    #   kagglehub
+    #   keras
     #   tensorboard
     #   tensorflow-cpu
-pyasn1==0.6.2
+pandas==2.3.3
+    # via traffic-sign-ai (pyproject.toml)
+pillow==12.1.0
     # via
-    #   pyasn1-modules
-    #   rsa
-pyasn1-modules==0.4.2
-    # via google-auth
+    #   traffic-sign-ai (pyproject.toml)
+    #   tensorboard
+protobuf==6.33.4
+    # via
+    #   kagglesdk
+    #   tensorboard
+    #   tensorflow-cpu
+pygments==2.19.2
+    # via rich
 python-dateutil==2.9.0.post0
     # via pandas
 pytz==2025.2
     # via pandas
+pyyaml==6.0.3
+    # via kagglehub
 requests==2.32.5
     # via
-    #   requests-oauthlib
-    #   tensorboard
-requests-oauthlib==2.0.0
-    # via google-auth-oauthlib
-rsa==4.9.1
-    # via google-auth
+    #   kagglehub
+    #   kagglesdk
+    #   tensorflow-cpu
+rich==14.2.0
+    # via keras
 scikit-learn==1.8.0
-    # via traffic-sign-classification (pyproject.toml)
+    # via traffic-sign-ai (pyproject.toml)
 scipy==1.17.0
     # via scikit-learn
 setuptools==80.9.0
@@ -110,25 +124,23 @@ six==1.17.0
     #   astunparse
     #   google-pasta
     #   python-dateutil
-    #   tensorboard
     #   tensorflow-cpu
-tensorboard==2.15.2
+tensorboard==2.20.0
     # via tensorflow-cpu
 tensorboard-data-server==0.7.2
     # via tensorboard
-tensorflow-cpu==2.15.0
-    # via traffic-sign-classification (pyproject.toml)
-tensorflow-estimator==2.15.0
-    # via tensorflow-cpu
-tensorflow-io-gcs-filesystem==0.37.1
-    # via tensorflow-cpu
+tensorflow-cpu==2.20.0
+    # via traffic-sign-ai (pyproject.toml)
 termcolor==3.3.0
     # via tensorflow-cpu
 threadpoolctl==3.6.0
     # via scikit-learn
+tqdm==4.67.1
+    # via kagglehub
 typing-extensions==4.15.0
     # via
     #   grpcio
+    #   optree
     #   tensorflow-cpu
 tzdata==2025.3
     # via pandas
@@ -140,5 +152,5 @@ werkzeug==3.1.5
     #   tensorboard
 wheel==0.45.1
     # via astunparse
-wrapt==1.14.2
+wrapt==2.0.1
     # via tensorflow-cpu
