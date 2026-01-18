@@ -69,7 +69,7 @@ Run
 When predict.py is running, open a new terminal and 
 
 Run
-*   **`predict_own.py`**: This script run the selected testing picture in the testing dataset, edit the py script to change the tested picture.
+*   **`predict_test.py`**: This script run the selected testing picture in the testing dataset, edit the py script to change the tested picture.
 
 or
 
@@ -105,7 +105,7 @@ The application is fully containerized.
 *   `notebook.ipynb`: Data cleaning, EDA, tuning experiments, and evaluation.
 *   `train.py`: Script for training the final model.
 *   `predict.py`: Flask web service for deployment.
-*   `predict_own.py`: CLI tool for users to test local images.
+*   `predict_test.py`: CLI tool for users to test local images.
 *   `Dockerfile`: Multi-stage build for containerization.
 *   `pyproject.toml` & `uv.lock`: Dependency management.
 *   `traffic_sign_model.h5`: The serialized trained model.
