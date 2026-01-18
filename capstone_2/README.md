@@ -1,1 +1,99 @@
+# Traffic Sign Recognition AI Project
 
+This project implements a complete end-to-end Machine Learning pipeline to classify traffic signs from the German Traffic Sign Recognition Benchmark (GTSRB).
+
+## Problem Description
+Traffic sign recognition is a fundamental component and difficulty in autonomous vehicle systems.Therefore, a high accuracy system that can recognize the sign accurately and in a short time is required to ensure passenger safety. The challenge with this dataset is the high variability in real-world images:
+*   **Varying Lighting:** Images range from very dark to overexposed.
+*   **Motion Blur:** Captured from moving vehicles, causing low resolution.
+*   **Class Imbalance:** Some signs appear significantly more frequently than others in the training data.
+
+**Goal:** This capstone project aims to create a CNN model that handles these variabilities and deploy it as a production-ready web service.
+
+---
+## 1. Dataset
+The dataset used is the **German Traffic Sign Recognition Benchmark (GTSRB)** obtained from Kaggle.
+
+*   **Source:** [Kaggle - GTSRB - German Traffic Sign Recognition Benchmark]([(https://www.kaggle.com/datasets/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign)])
+*   **Size:** ~50,000 images across 43 categories.
+*   **Dataset Acquisition:** The data is pulled programmatically via `kagglehub`in training.py, manual zip file management is not needed.
+
+### Label Enhancement (Feature Engineering)
+The raw dataset provides only numeric identifiers. As part of the **Data Preparation** phase:
+1.  A **Numeric-to-Text Mapping** is implemented for all 43 classes.
+2.  A `ClassName` column is added to the dataframes to enable human-readable visualization during EDA and testing stage.
+3.  The final deployed API will return both the `ClassId` and the `ClassName`.
+
+---
+
+## 2. Exploratory Data Analysis
+Extensive EDA is performed in the `notebook.ipynb` to guide the modeling process:
+*   **Target Variable Analysis:** The distribution of the 43 classes is visualized using Seaborn. This reveals a significant imbalance which is addressed using **Stratified Splitting** and **Balanced Class Weights**.
+*   **Feature Mapping:** The numerical `ClassId` (0-42) is converted to descriptive `ClassName` (e.g., "Stop", "Yield") for better human interpretability.
+*   **Image Content Analysis:** The pixel intensity distribution is analyzed and random samples are chosen to be visualized, identifying that many images suffer from poor contrast.
+*   **Augmentation Strategy:** Based on EDA, data augmentation is applied (rotation, brightness shifts, and zooms) to make the model invariant to lighting and camera angles.
+
+---
+
+## 3. Model Training & Tuning
+This project trains CNN under different parameter and the best model is chosen:
+*   **Baseline Model:** A simple CNN without dropout to establish a performance floor.
+*   **Variations:** This project experiments with **Inner Layer Size**, **Dropout Rate** and **Learning Rate** to find the optimal depth.
+*   **Parameter Tuning:**
+    *   **Inner Layer Size:** Tested 64, 128, and 256 nodes.
+    *   **Dropout Rate:** Tested 0.2, 0.5, and 0.8 to find the best regularization balance.
+    *   **Learning Rate:** Tuned the Adam optimizer using 0.01, 0.001, and 0.0001.
+*   **Inheritance:** Each tuning phase inherited the "Best" parameters from the previous step to continuously evolve the model.
+
+| Phase | Parameter Tuned | Values Tested | Best Value | Val Accuracy | Rationale & Observation |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **0** | **Baseline** | N/A | No Dropout | 94.06% | Establishing a floor. The model showed high accuracy but signs of slight overfitting. |
+| **1** | **Inner Layer Size** | 64, 128, **256** | 256 | 95.82% | 256 nodes captured complex spatial features of 43 classes better than 64 nodes. |
+| **2** | **Dropout Rate** | 0.2, **0.5**, 0.8 | 0.5 | 96.15% | 0.8 caused underfitting; 0.5 provided the best regularization against overfitting. |
+| **3** | **Learning Rate** | 0.01, **0.001**, 0.0001 | 0.001 | 96.48% | 0.01 was too aggressive (accuracy jumped); 0.001 provided smooth convergence. |
+| **Final**| **Grand Champion**| Combined Best | **Final Model** | **98.25%** | Final architecture: 2 Conv layers + 256 Dense + 0.4 Dropout + 0.001 LR (20 Epochs). |
+
+---
+
+## 4. Exporting Notebook to Script (1/1 Point)
+The logic for the final optimized model was exported from the experimentation notebook to a standalone training script:
+*   **`train.py`**: This script contains the final architecture and logic to train the model and save it as `traffic_sign_model.h5`.
+
+---
+
+## 5. Reproducibility & Dependency Management (4/4 Points)
+This project ensures 100% reproducibility across environments:
+*   **Data Acquisition:** No manual zip downloads are required. The project uses `kagglehub` to automatically download the dataset to the local cache.
+*   **Dependency Management:** We use **`pyproject.toml`** and **`uv.lock`** (modern equivalents to Pipenv/Conda) to pin exact versions of TensorFlow, Flask, and Scikit-Learn.
+*   **Python Version:** Optimized for **Python 3.11**.
+
+---
+
+## 6. Containerization & Deployment (4/4 Points)
+### Containerization
+The application is fully containerized using a **Multi-Stage Docker Build** to minimize the final image size.
+*   **Build command:** `docker build -t traffic-sign-ai .`
+*   **Run command:** `docker run -it -p 9696:9696 traffic-sign-ai`
+
+### Model Deployment
+The model is served as a web service via **Flask**.
+*   **Endpoint:** `/predict` (POST)
+*   **Response:** JSON format including `class_id`, `class_name`, and `confidence`.
+
+### Cloud Deployment
+*   **Public URL:** [INSERT YOUR RENDER URL HERE]
+*   **Note:** Render's Free Tier has a 512MB RAM limit. TensorFlow initialization may occasionally exceed this limit.
+*   **Deployment Evidence:** A screenshot of a successful prediction response (JSON) from the deployed container is provided below.
+
+*(INSERT_YOUR_SCREENSHOT_HERE)*
+
+---
+
+## 7. Project Structure
+*   `notebook.ipynb`: Data cleaning, EDA, tuning experiments, and evaluation.
+*   `train.py`: Script for training the final model.
+*   `predict.py`: Flask web service for deployment.
+*   `predict_own.py`: CLI tool for users to test local images.
+*   `Dockerfile`: Multi-stage build for containerization.
+*   `pyproject.toml` & `uv.lock`: Dependency management.
+*   `traffic_sign_model.h5`: The serialized trained model.
