@@ -89,14 +89,14 @@ The application is fully containerized.
    ```bash
    `docker run -it -p 9696:9696 traffic-sign-ai`
    ```
-*   **Test comman:**
+*   **Test command:**
    ```bash
    `python predict_test.py`
    ```
 
+---
 
-
-### Cloud Deployment
+## 6. Cloud Deployment
 *   **Public URL:** [(https://traffic-sign-ai-hsf3.onrender.com)]
 *   **Note:** The link might take a couples of minutes to load, after it is done loading, choose a picture of your own to test it.
 
