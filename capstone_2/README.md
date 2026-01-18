@@ -1,4 +1,4 @@
-# Traffic Sign Recognition AI Project
+# Traffic Sign Recognition Project
 
 This project implements a complete end-to-end Machine Learning pipeline to classify traffic signs from the German Traffic Sign Recognition Benchmark (GTSRB).
 
