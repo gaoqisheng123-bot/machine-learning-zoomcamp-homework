@@ -68,7 +68,7 @@ Run
 When predict.py is running, open a new terminal and 
 
 Run
-*   **`predict_test.py`**: This script run the selected testing picture in the testing dataset, edit the py script to change the tested picture.
+*   **`predict_test.py`**: This script run the selected testing picture in the testing dataset, edit this script to change the tested picture.
 
 or
 
