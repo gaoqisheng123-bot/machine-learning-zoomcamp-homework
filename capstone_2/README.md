@@ -70,16 +70,11 @@ Run
 ---
 
 ## 5. Containerization
-This project ensures 100% reproducibility across environments:
-*   **Data Acquisition:** No manual zip downloads are required. The project uses `kagglehub` to automatically download the dataset to the local cache.
-*   **Dependency Management:** We use **`pyproject.toml`** and **`uv.lock`** (modern equivalents to Pipenv/Conda) to pin exact versions of TensorFlow, Flask, and Scikit-Learn.
-*   **Python Version:** Optimized for **Python 3.11**.
-
----
-
-## 6. Containerization & Deployment (4/4 Points)
 The application is fully containerized.
-*   **Build command:** `docker build -t traffic-sign-ai .`
+*   **Build command:**
+   ```bash
+   `docker build -t traffic-sign-ai .`
+
 *   **Run command:** `docker run -it -p 9696:9696 traffic-sign-ai`
 
 
