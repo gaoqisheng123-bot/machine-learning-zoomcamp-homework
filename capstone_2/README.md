@@ -74,7 +74,7 @@ The application is fully containerized.
 *   **Build command:**
    ```bash
    `docker build -t traffic-sign-ai .`
-
+   ```
 *   **Run command:** `docker run -it -p 9696:9696 traffic-sign-ai`
 
 
