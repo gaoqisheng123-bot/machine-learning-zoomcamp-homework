@@ -63,15 +63,14 @@ The model is served as a web service via **Flask**.
 
 Run
 *   **`train.py`**: This script contains the final architecture and logic to train the model and save it as `traffic_sign_model.h5`.
-Run
 *   **`predict.py`**: This script starts the Flask API locally and interact with the model via a web interface.
 
-When predict.py is running, open a new terminal and 
+When predict.py is running, open a new terminal and /
 
 Run
 *   **`predict_test.py`**: This script run the selected testing picture in the testing dataset, edit the py script to change the tested picture.
 
-or
+or/
 
 Open on a browser and search to choose an own picture to test
 ```bash
