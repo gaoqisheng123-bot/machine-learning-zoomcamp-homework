@@ -57,12 +57,19 @@ This project trains CNN under different parameter and the best model is chosen:
 ---
 
 ## 4. Deployment
-The logic for the final optimized model was exported from the experimentation notebook to a standalone training script:
-*   **`train.py`**: This script contains the final architecture and logic to train the model and save it as `traffic_sign_model.h5`.
+The model is served as a web service via **Flask**.
+*   **Endpoint:** `/predict` (POST)
+*   **Response:** JSON format including `class_id`, `class_name`, and `confidence`.
 
+Run
+*   **`train.py`**: This script contains the final architecture and logic to train the model and save it as `traffic_sign_model.h5`.
+Run
+*   **`predict.py`**: This script starts the Flask API locally and interact with the model via a web interface.
+Run
+*   **`predict_own`**: This script run the selected testing picture in the testing dataset.
 ---
 
-## 5. Reproducibility & Dependency Management (4/4 Points)
+## 5. Containerization
 This project ensures 100% reproducibility across environments:
 *   **Data Acquisition:** No manual zip downloads are required. The project uses `kagglehub` to automatically download the dataset to the local cache.
 *   **Dependency Management:** We use **`pyproject.toml`** and **`uv.lock`** (modern equivalents to Pipenv/Conda) to pin exact versions of TensorFlow, Flask, and Scikit-Learn.
